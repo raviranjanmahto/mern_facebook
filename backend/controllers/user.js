@@ -1,6 +1,11 @@
-const { validateEmail, validateLength } = require("../helpers/validation");
+const {
+  validateEmail,
+  validateLength,
+  validateUsername,
+} = require("../helpers/validation");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const { generateToken } = require("../helpers/tokens");
 
 exports.register = async (req, res) => {
   try {
@@ -44,11 +49,14 @@ exports.register = async (req, res) => {
     }
 
     const cryptedPassword = await bcrypt.hash(password, 11);
-    console.log(cryptedPassword);
+
+    let tempUsername = first_name + last_name;
+    let newUsername = await validateUsername(tempUsername);
+
     const user = await new User({
       first_name,
       last_name,
-      username,
+      username: newUsername,
       email,
       password: cryptedPassword,
       bYear,
@@ -56,6 +64,11 @@ exports.register = async (req, res) => {
       bDay,
       gender,
     }).save();
+    const emailVerificationToken = generateToken(
+      { id: user._id.toString() },
+      process.env.EXPIREIN
+    );
+    console.log(emailVerificationToken);
     user.password = undefined;
     res.json(user);
   } catch (error) {
