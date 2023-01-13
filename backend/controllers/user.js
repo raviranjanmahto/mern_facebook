@@ -4,8 +4,10 @@ const {
   validateUsername,
 } = require("../helpers/validation");
 const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../helpers/tokens");
+const { sendVerificationEmail } = require("../helpers/mailer");
 
 exports.register = async (req, res) => {
   try {
@@ -66,11 +68,77 @@ exports.register = async (req, res) => {
     }).save();
     const emailVerificationToken = generateToken(
       { id: user._id.toString() },
-      process.env.EXPIREIN
+      process.env.VERIFICATION_EXPIRE
     );
-    console.log(emailVerificationToken);
-    user.password = undefined;
-    res.json(user);
+    const url = `${process.env.BASE_URL}/activate/${emailVerificationToken}`;
+    sendVerificationEmail(user.email, user.first_name, url);
+    // user.password = undefined;
+    const token = generateToken(
+      { id: user._id.toString() },
+      process.env.LOGIN_EXPIRE
+    );
+    res.send({
+      id: user._id,
+      username: user.username,
+      picture: user.picture,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      token: token,
+      verified: user.verified,
+      message: "Register Success! please activate your account",
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.activateAccount = async (req, res) => {
+  try {
+    const { token } = req.body;
+    const user = jwt.verify(token, process.env.TOKEN_SECRET);
+    const check = await User.findById(user.id);
+    if (check.verified == true) {
+      return res
+        .status(400)
+        .json({ message: "This account is already activated!" });
+    } else {
+      await User.findByIdAndUpdate(user.id, { verified: true });
+      return res
+        .status(200)
+        .json({ message: "Account has been activated successfully!" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "This email address not exist, please register." });
+    }
+    const check = await bcrypt.compare(password, user.password);
+    if (!check) {
+      return res.status(400).json({ message: "Invalid Credentials!!!." });
+    }
+    const token = generateToken(
+      { id: user._id.toString() },
+      process.env.LOGIN_EXPIRE
+    );
+    res.send({
+      id: user._id,
+      username: user.username,
+      picture: user.picture,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      token: token,
+      verified: user.verified,
+      message: "Login Success!",
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
