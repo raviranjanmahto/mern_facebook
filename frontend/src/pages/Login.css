@@ -67,6 +67,7 @@
     align-items: center;
     min-width: 1000px;
     margin: 0 auto;
+    padding: 0 17rem 0 11rem;
   }
   .login_1 {
     display: flex;

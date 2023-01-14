@@ -46,10 +46,24 @@
   position: absolute;
   bottom: -10px;
 }
+.error_arrow_left {
+  border-left: 10px solid #b94a48;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  position: absolute;
+  right: -9.9px;
+  top: 17px;
+}
 .error_arrow_bottom {
   border-bottom: 10px solid #b94a48;
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
   position: absolute;
   top: -10px;
+}
+.input_error_desktop {
+  position: absolute;
+  width: 300px;
+  left: -19.5rem;
+  top: -4px;
 }
