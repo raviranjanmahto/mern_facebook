@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home, Login, Profile } from "./pages/index";
+import "../src/styles/icons/icons.css";
 
 function App() {
   return (
