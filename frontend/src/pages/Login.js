@@ -1,13 +1,12 @@
-// import React from "react";
-import { Footer, LoginForm } from "../components";
 import "./Login.css";
+import { LoginForm, RegisterForm, Footer } from "../components/login";
 
 const Login = () => {
   return (
     <div className='login'>
       <div className='login_wrapper'>
         <LoginForm />
-        <div className='register'></div>
+        <RegisterForm />
         <Footer />
       </div>
     </div>

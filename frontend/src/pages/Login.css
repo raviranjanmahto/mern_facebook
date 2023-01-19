@@ -1,3 +1,5 @@
+/* --------LOGIN START-------- */
+
 .login_wrapper {
   background: var(--bg-secondary);
 }
@@ -5,7 +7,7 @@
   height: 78vh;
   color: var(--color-primary);
 }
-.login_1 {
+-------- .login_1 {
   width: 300px;
   margin: 0 auto;
 }
@@ -59,7 +61,90 @@
   font-size: 15px;
 }
 
-/* ********Footer******** */
+/* --------LOGIN END-------- */
+
+/* --------REGISTER START-------- */
+.register {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-primary);
+  box-shadow: 0 1px 2px var(--shadow-1);
+  border-radius: 10px;
+  padding: 15px;
+  padding-bottom: 1rem;
+  width: 350px;
+  height: fit-content;
+  /* width: fit-content; */
+  color: var(--color-primary);
+}
+.register_header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--bg-third);
+}
+.register_header i {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+.register_header span:first-of-type {
+  font-weight: 700;
+  font-size: 32px;
+}
+.register_header span:last-of-type {
+  font-size: 15px;
+  color: var(--color-secondary);
+}
+.register_form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.reg_line {
+  padding: 7px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.reg_col {
+  position: relative;
+  align-self: flex-start;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+.reg_line_header {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 13px;
+  color: var(--color-secondary);
+}
+.reg_grid {
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  height: 30px;
+  width: 100%;
+}
+.reg_grid select {
+  width: 90px;
+  font-size: 16px;
+  color: var(--color-primary);
+  background: var(--bg-primary);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* --------REGISTER END-------- */
+
+/* --------FOOTER START-------- */
 
 .login_footer {
   height: 22vh;
@@ -103,9 +188,9 @@
   max-width: 900px;
 }
 
-/* ********Footer******** */
+/* --------FOOTER END-------- */
 
-/* ********Media queries******** */
+/* --------Media queries-------- */
 
 @media (min-width: 539px) {
   .login_footer_wrap {
@@ -149,4 +234,4 @@
   }
 }
 
-/* ********Media queries******** */ ;
+/* --------Media queries-------- */ ;
