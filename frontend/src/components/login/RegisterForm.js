@@ -2,10 +2,17 @@ import { Form, Formik } from "formik";
 import { useState } from "react";
 import RegisterInput from "../inputs/RegisterInput";
 import * as Yup from "yup";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { DateOfBirthSelect, GenderSelect } from "./index";
+import { useNavigate } from "react-router-dom";
 
-const RegisterForm = () => {
+const RegisterForm = ({ setVisible }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const initialState = {
     first_name: "",
     last_name: "",
@@ -77,13 +84,41 @@ const RegisterForm = () => {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const registerSubmit = async () => {};
+  const registerSubmit = async () => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/register`,
+        {
+          first_name,
+          last_name,
+          email,
+          password,
+          bYear,
+          bMonth,
+          bDay,
+          gender,
+        }
+      );
+      setError("");
+      setSuccess(data.message);
+      const { message, ...rest } = data;
+      setTimeout(() => {
+        dispatch({ type: "LOGIN", payload: rest });
+        Cookies.set("user", JSON.stringify(rest));
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      setLoading(false);
+      setSuccess("");
+      setError(error.response.data.message);
+    }
+  };
 
   return (
     <div className='blur'>
       <div className='register'>
         <div className='register_header'>
-          <i className='exit_icon'></i>
+          <i className='exit_icon' onClick={() => setVisible(false)}></i>
           <span>Sign Up</span>
           <span>it's quick and easy</span>
         </div>
@@ -189,7 +224,9 @@ const RegisterForm = () => {
                 from us and can opt out at any time.
               </div>
               <div className='reg_btn_wrapper'>
-                <button className='blue_btn open_signup'>Sign Up</button>
+                <button type='submit' className='blue_btn open_signup'>
+                  Sign Up
+                </button>
               </div>
               <ScaleLoader color='#1876f2' loading={loading} size={30} />
               {error && <div className='error_text'>{error}</div>}
