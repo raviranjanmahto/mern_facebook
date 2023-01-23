@@ -1,9 +1,9 @@
-// import React from "react";
-
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import RegisterInput from "../inputs/RegisterInput";
 import * as Yup from "yup";
+import ScaleLoader from "react-spinners/ScaleLoader";
+import { DateOfBirthSelect, GenderSelect } from "./index";
 
 const RegisterForm = () => {
   const initialState = {
@@ -27,10 +27,12 @@ const RegisterForm = () => {
     bDay,
     gender,
   } = user;
+
   const handleChange = e => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
+
   const tempYear = new Date().getFullYear();
   const years = Array.from(new Array(108), (value, index) => tempYear - index);
   const months = Array.from(new Array(12), (value, index) => 1 + index);
@@ -69,6 +71,14 @@ const RegisterForm = () => {
       .max(40, "Password can't be more than 40 characters."),
   });
 
+  const [dateError, setDateError] = useState("");
+  const [genderError, setGenderError] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const registerSubmit = async () => {};
+
   return (
     <div className='blur'>
       <div className='register'>
@@ -90,6 +100,31 @@ const RegisterForm = () => {
             gender,
           }}
           validationSchema={registerValidation}
+          onSubmit={() => {
+            let currentDate = new Date();
+            let pickedDate = new Date(bYear, bMonth - 1, bDay);
+            let atLeast14 = new Date(1970 + 14, 0, 1);
+            let noMoreThan94 = new Date(1970 + 94, 0, 1);
+            if (currentDate - pickedDate < atLeast14) {
+              setDateError(
+                "it looks like you entered the wrong info.Please make sure that you use your real date of birth."
+              );
+            } else if (currentDate - pickedDate > noMoreThan94) {
+              setDateError("");
+              setDateError(
+                "it looks like you entered the wrong info.Please make sure that you use your real date of birth."
+              );
+            } else if (gender === "") {
+              setDateError("");
+              setGenderError(
+                "Please choose a gender. You can change who can see this later."
+              );
+            } else {
+              setDateError("");
+              setGenderError("");
+              registerSubmit();
+            }
+          }}
         >
           {formik => (
             <Form className='register_form'>
@@ -127,66 +162,25 @@ const RegisterForm = () => {
                 <div className='reg_line_header'>
                   Date of birth <i className='info_icon'></i>
                 </div>
-                <div className='reg_grid'>
-                  <select name='bDay' value={bDay} onChange={handleChange}>
-                    {days.map((day, i) => (
-                      <option value={day} key={i}>
-                        {day}
-                      </option>
-                    ))}
-                  </select>
-                  <select name='bMonth' value={bMonth} onChange={handleChange}>
-                    {months.map((month, i) => (
-                      <option value={month} key={i}>
-                        {month}
-                      </option>
-                    ))}
-                  </select>
-                  <select name='bYear' value={bYear} onChange={handleChange}>
-                    {years.map((year, i) => (
-                      <option value={year} key={i}>
-                        {year}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <DateOfBirthSelect
+                  bDay={bDay}
+                  bMonth={bMonth}
+                  bYear={bYear}
+                  days={days}
+                  months={months}
+                  years={years}
+                  handleChange={handleChange}
+                  dateError={dateError}
+                />
               </div>
               <div className='reg_col'>
                 <div className='reg_line_header'>
                   Gender <i className='info_icon'></i>
                 </div>
-                <div className='reg_grid'>
-                  <label htmlFor='male'>
-                    Male
-                    <input
-                      type='radio'
-                      name='gender'
-                      id='male'
-                      value='male'
-                      onChange={handleChange}
-                    />
-                  </label>
-                  <label htmlFor='female'>
-                    Female
-                    <input
-                      type='radio'
-                      name='gender'
-                      id='female'
-                      value='female'
-                      onChange={handleChange}
-                    />
-                  </label>
-                  <label htmlFor='custom'>
-                    Custom
-                    <input
-                      type='radio'
-                      name='gender'
-                      id='custom'
-                      value='custom'
-                      onChange={handleChange}
-                    />
-                  </label>
-                </div>
+                <GenderSelect
+                  handleChange={handleChange}
+                  genderError={genderError}
+                />
               </div>
               <div className='reg_infos'>
                 By clicking Sign Up, you agree to our{" "}
@@ -197,6 +191,9 @@ const RegisterForm = () => {
               <div className='reg_btn_wrapper'>
                 <button className='blue_btn open_signup'>Sign Up</button>
               </div>
+              <ScaleLoader color='#1876f2' loading={loading} size={30} />
+              {error && <div className='error_text'>{error}</div>}
+              {success && <div className='success_text'>{success}</div>}
             </Form>
           )}
         </Formik>

@@ -126,7 +126,6 @@
 }
 .reg_line_header i {
   margin-top: 3px;
-  /* cursor: pointer; */
 }
 .reg_grid {
   margin-top: 5px;
@@ -220,6 +219,31 @@
 
 /* --------FOOTER END-------- */
 
+/* --------DOB AND GENDER ERRORS START-------- */
+
+.reg_grid .input_error {
+  width: 300px;
+  position: absolute;
+  top: 65px;
+}
+.input_error_select_large {
+  left: -95%;
+  top: 11px !important;
+}
+
+/* --------DOB AND GENDER ERRORS END-------- */
+
+/* ERROR AND SUCCESS STYLE START */
+
+.error_text {
+  color: #b94a48;
+}
+.success_text {
+  color: var(--green-color);
+}
+
+/* ERROR AND SUCCESS STYLE END */
+
 /* --------Media queries-------- */
 
 @media (min-width: 539px) {
@@ -235,6 +259,9 @@
   .reg_grid select,
   .reg_grid label {
     width: 110px;
+  }
+  .reg_grid .input_error {
+    width: 350px;
   }
 }
 @media (min-width: 650px) {
