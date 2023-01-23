@@ -86,6 +86,8 @@ const RegisterForm = ({ setVisible }) => {
 
   const registerSubmit = async () => {
     try {
+      setLoading(true);
+      setError("");
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/register`,
         {
@@ -99,7 +101,6 @@ const RegisterForm = ({ setVisible }) => {
           gender,
         }
       );
-      setError("");
       setSuccess(data.message);
       const { message, ...rest } = data;
       setTimeout(() => {

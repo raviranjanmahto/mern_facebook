@@ -30,12 +30,8 @@ const LoginForm = ({ setVisible }) => {
   const loginValidation = Yup.object({
     email: Yup.string()
       .required(`Email address is required`)
-      .email(`Must be a valid email`)
-      .max(70, "Email is too long"),
-    password: Yup.string()
-      .required(`Password is required`)
-      .min(6, "Password must be at least 6 character !")
-      .max(40, "Password is not more than 40 character!"),
+      .email(`Must be a valid email`),
+    password: Yup.string().required(`Password is required`),
   });
 
   const [error, setError] = useState("");
@@ -44,11 +40,11 @@ const LoginForm = ({ setVisible }) => {
   const loginSubmit = async () => {
     try {
       setLoading(true);
+      setError("");
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/login`,
         { email, password }
       );
-      setError("");
       const { message, ...rest } = data;
       dispatch({ type: "LOGIN", payload: rest });
       Cookies.set("user", JSON.stringify(rest));
