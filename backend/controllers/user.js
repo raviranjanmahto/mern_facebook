@@ -52,7 +52,9 @@ exports.register = async (req, res) => {
 
     const cryptedPassword = await bcrypt.hash(password, 11);
 
-    let tempUsername = first_name + last_name;
+    let tempUsername = await (first_name + last_name)
+      .toLowerCase()
+      .replace(/ /g, "");
     let newUsername = await validateUsername(tempUsername);
 
     const user = await new User({
