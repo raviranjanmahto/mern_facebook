@@ -93,8 +93,11 @@ const LoginForm = ({ setVisible }) => {
                   onChange={handleChange}
                   bottom
                 />
-                <button type='submit' className='blue_btn'>
-                  Login
+                <button type='submit' className='blue_btn' disabled={loading}>
+                  <ScaleLoader color='#fff' loading={loading} size={30} />
+                  {loading ? "Please wait..." : "Login"}
+                  {/* Login */}
+                  <ScaleLoader color='#fff' loading={loading} size={30} />
                 </button>
               </Form>
             )}
@@ -102,7 +105,6 @@ const LoginForm = ({ setVisible }) => {
           <Link to='/forgot' className='forgot_password'>
             Forgotten password?
           </Link>
-          <ScaleLoader color='#1876f2' loading={loading} size={30} />
           {error && <div className='error_text'>{error}</div>}
           <div className='sign_splitter'></div>
           <button
