@@ -65,11 +65,17 @@ a {
   z-index: 99;
 }
 
-/* HOVERS */
+/* HOVERS START */
 .hover1:hover {
   background: var(--bg-secondary);
 }
 .hover2:hover {
   background: var(--bg-third);
 }
-/* HOVERS */
+/* HOVERS END */
+
+.card {
+  height: 500px;
+  width: 500px;
+  background: red;
+}
