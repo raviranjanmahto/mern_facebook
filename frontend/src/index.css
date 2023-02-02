@@ -74,8 +74,14 @@ a {
 }
 /* HOVERS END */
 
-.card {
-  height: 500px;
-  width: 500px;
-  background: red;
+/* SCROLLBAR */
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
 }
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #aeaeafa1;
+  border-radius: 5px;
+}
+
+/* SCROLLBAR */ ;
