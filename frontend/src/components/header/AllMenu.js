@@ -1,3 +1,6 @@
+import { menu, create } from "../../data/allMenu";
+import { AllMenuItem } from "./AllMenuItem";
+
 const AllMenu = () => {
   return (
     <div>
@@ -11,15 +14,14 @@ const AllMenu = () => {
             </div>
             <div className='all_menu_group'>
               <div className='all_menu_group_header'>Social</div>
-              <div className='all_menu_item hover1'>
-                <img src='../../left/campus.png' alt='' />
-                <div className='all_menu_col'>
-                  <span>Campus</span>
-                  <span>
-                    A unique, exclusive space for college students on Facebook.
-                  </span>
-                </div>
-              </div>
+              {menu.slice(0, 6).map((item, i) => (
+                <AllMenuItem
+                  key={i}
+                  name={item.name}
+                  description={item.description}
+                  icon={item.icon}
+                />
+              ))}
             </div>
           </div>
         </div>
