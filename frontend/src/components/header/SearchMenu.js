@@ -49,7 +49,7 @@ const SearchMenu = ({ color, setShowSearchMenu }) => {
       </div>
       <div className='search_history_header'>
         <span>Recent searches</span>
-        <a href='#'>Edit</a>
+        <a href='/haveToChangeItLater'>Edit</a>
       </div>
       <div className='search_history'></div>
       <div className='search_history scrollbar'></div>
