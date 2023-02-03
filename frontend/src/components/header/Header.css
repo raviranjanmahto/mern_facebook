@@ -472,6 +472,17 @@ header {
 
 /* USER MENU END */
 
+/* --------ACTIVE HEADER START-------- */
+
+.active_header {
+  background: var(--light-blue-color);
+}
+.active_header svg {
+  fill: var(--blue-color);
+}
+
+/* --------ACTIVE HEADER END-------- */
+
 /* MEDIA QUERIES START */
 
 @media (max-width: 1295px) {
