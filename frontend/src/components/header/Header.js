@@ -74,7 +74,7 @@ const Header = () => {
       </div>
       <div className='header_right'>
         <Link to='/profile' className='profile_link hover1'>
-          <img src={user?.picture} alt='' />
+          <img src={user?.picture} alt=' user images' />
           <span>{user?.first_name}</span>
         </Link>
         <div
