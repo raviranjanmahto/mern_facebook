@@ -1,0 +1,28 @@
+{
+  "name": "facebook",
+  "version": "1.0.0",
+  "description": "A facebook application in MERN",
+  "main": "index.js",
+  "scripts": {
+    "setup-production": "npm run install-frontend && npm run build-frontend && npm install",
+    "install-frontend": "cd frontend && npm install",
+    "build-frontend": "cd frontend && npm run build",
+    "server": "cd backend && nodemon server --ignore frontend",
+    "frontend": "npm start --prefix frontend",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raviranjanmahto/mern_facebook.git"
+  },
+  "author": "Raviranjan Mahto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raviranjanmahto/mern_facebook/issues"
+  },
+  "homepage": "https://github.com/raviranjanmahto/mern_facebook#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
