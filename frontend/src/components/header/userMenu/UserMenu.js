@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import HelpSupport from "./HelpSupport";
 import { SettingsPrivacy } from "./SettingsPrivacy";
 
 export const UserMenu = ({ user }) => {
-  const [visible, setVisible] = useState(1);
+  const [visible, setVisible] = useState(0);
   return (
     <div className='mmenu'>
       {visible === 0 && (
@@ -37,7 +38,7 @@ export const UserMenu = ({ user }) => {
               <i className='right_icon'></i>
             </div>
           </div>
-          <div className='mmenu_item hover3'>
+          <div className='mmenu_item hover3' onClick={() => setVisible(2)}>
             <div className='small_circle'>
               <i className='help_filled_icon'></i>
             </div>
@@ -64,6 +65,7 @@ export const UserMenu = ({ user }) => {
         </div>
       )}
       {visible === 1 && <SettingsPrivacy setVisible={setVisible} />}
+      {visible === 2 && <HelpSupport setVisible={setVisible} />}
     </div>
   );
 };
