@@ -458,7 +458,7 @@ header {
 .absolute_wrap label {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin-left: 50px;
   font-weight: 600;
   padding: 10px;

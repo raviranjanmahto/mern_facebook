@@ -25,8 +25,11 @@ const Header = () => {
   const color = "#65676b";
   const [showSearchMenu, setShowSearchMenu] = useState(false);
   const [showAllMenu, setShowAllMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const allMenu = useRef(null);
+  const userMenu = useRef(null);
   useClickOutside(allMenu, () => setShowAllMenu(false));
+  useClickOutside(userMenu, () => setShowUserMenu(false));
 
   return (
     <header>
@@ -92,9 +95,11 @@ const Header = () => {
           <Notifications />
           <div className='right_notification'>5</div>
         </div>
-        <div className='circle_icon hover1'>
-          <ArrowDown />
-          <UserMenu user={user} />
+        <div className='circle_icon hover1' ref={userMenu}>
+          <div onClick={() => setShowUserMenu(prev => !prev)}>
+            <ArrowDown />
+          </div>
+          {showUserMenu && <UserMenu user={user} />}
         </div>
       </div>
     </header>
