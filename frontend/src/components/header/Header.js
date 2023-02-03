@@ -80,12 +80,10 @@ const Header = () => {
           <img src={user?.picture} alt=' user images' />
           <span>{user?.first_name}</span>
         </Link>
-        <div
-          className='circle_icon hover1'
-          ref={allMenu}
-          onClick={() => setShowAllMenu(prev => !prev)}
-        >
-          <Menu />
+        <div className='circle_icon hover1' ref={allMenu}>
+          <div onClick={() => setShowAllMenu(prev => !prev)}>
+            <Menu />
+          </div>
           {showAllMenu && <AllMenu />}
         </div>
         <div className='circle_icon hover1'>
