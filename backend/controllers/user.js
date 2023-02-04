@@ -117,6 +117,9 @@ exports.activateAccount = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!validateEmail(email)) {
+      return res.status(400).json({ message: "Invalid email address" });
+    }
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return res
