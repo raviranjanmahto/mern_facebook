@@ -7,6 +7,7 @@
   overflow-y: auto;
   color: var(--color-primary);
   padding: 15px 0;
+  padding-bottom: 4rem;
 }
 .left_link {
   display: flex;
@@ -53,4 +54,32 @@
   position: absolute;
   left: -10px;
   bottom: 4px;
+}
+.rotate360 {
+  transform: rotate(180deg);
+}
+.splitter {
+  height: 1.3px;
+  background: var(--divider);
+  margin: 9px 2px 0 12px;
+}
+.shortcut {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-secondary);
+  padding: 13px 10px 11px 10px;
+}
+.edit_shortcut {
+  font-size: 14px;
+  color: var(--blue-color);
+  display: none;
+  cursor: pointer;
+}
+.shortcut:hover .edit_shortcut {
+  display: block;
 }
