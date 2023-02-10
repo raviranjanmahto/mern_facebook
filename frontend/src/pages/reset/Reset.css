@@ -1,6 +1,6 @@
 .reset {
   background: var(--bg-secondary);
-  height: 100vw;
+  height: 100vh;
   color: var(--color-primary);
 }
 .reset_header {
@@ -30,13 +30,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 10px;
 }
 .reset_form {
   position: relative;
   background: var(--bg-primary);
   box-shadow: 0 1px 2px var(--shadow-1);
   border-radius: 10px;
-  width: 450px;
+  width: 100%;
   height: 280px;
 }
 .reset_form_header {
@@ -62,8 +63,23 @@
   padding: 10px;
   position: absolute;
   right: 10px;
-  bottom: 10px;
+  bottom: 0;
 }
 .reset_form_btn button {
   width: 90px;
 }
+
+/* --------MEDIA QUERIES START-------- */
+
+@media (max-width: 350px) {
+  .reset_form form input {
+    width: 290px;
+  }
+}
+@media (min-width: 650px) {
+  .reset_form {
+    width: 570px;
+  }
+}
+
+/* --------MEDIA QUERIES END-------- */
