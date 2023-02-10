@@ -12,7 +12,8 @@
 }
 @media (max-width: 1175px) {
   .stories,
-  .createPost {
+  .createPost,
+  .send_verification {
     width: 83%;
   }
   .home_middle {
@@ -56,12 +57,14 @@
     width: 20px;
   }
   .stories,
-  .createPost {
+  .createPost,
+  .send_verification {
     width: 100%;
   }
 }
 @media (max-width: 950px) {
-  .createPost {
+  .createPost,
+  .send_verification {
     width: 93%;
   }
   .stories {
@@ -91,7 +94,8 @@
   .right_home {
     display: none;
   }
-  .createPost {
+  .createPost,
+  .send_verification {
     width: 111%;
   }
   .stories .white_circle {
@@ -130,7 +134,8 @@
     margin-top: 60px;
   }
   .stories,
-  .createPost {
+  .createPost,
+  .send_verification {
     width: 100%;
   }
   .stories .white_circle {

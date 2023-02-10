@@ -36,12 +36,12 @@ const Activate = () => {
       dispatch({ type: "VERIFY", payload: true });
       setTimeout(() => {
         navigate("/");
-      }, 4000);
+      }, 3000);
     } catch (error) {
       setError(error.response.data.message);
       setTimeout(() => {
         navigate("/");
-      }, 4000);
+      }, 3000);
     }
   };
 
