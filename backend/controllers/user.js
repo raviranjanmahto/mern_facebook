@@ -155,4 +155,25 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.resendVerification = () => {};
+exports.resendVerification = async (req, res) => {
+  try {
+    const id = req.user.id;
+    const user = await User.findById(id);
+    if (user.verified === true) {
+      return res
+        .status(400)
+        .json({ message: "This account is already activated!" });
+    }
+    const emailVerificationToken = generateToken(
+      { id: user._id.toString() },
+      process.env.VERIFICATION_EXPIRE
+    );
+    const url = `${process.env.BASE_URL}/activate/${emailVerificationToken}`;
+    sendVerificationEmail(user.email, user.first_name, url);
+    return res.status(200).json({
+      message: "Email verification link has been sent to your email.",
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
