@@ -2,8 +2,12 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../../components/login/Footer";
+import ChangePassword from "./ChangePassword";
+import CodeVerification from "./CodeVerification";
 import "./Reset.css";
 import SearchAccount from "./SearchAccount";
+import SendEmail from "./SendEmail";
 
 const Reset = () => {
   const { user } = useSelector(state => ({ ...state }));
@@ -11,6 +15,9 @@ const Reset = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(0);
   const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm_password, setConfirm_password] = useState("");
   const [error, setError] = useState("");
   const logout = () => {
     Cookies.remove("user", "");
@@ -47,7 +54,26 @@ const Reset = () => {
         {visible === 0 && (
           <SearchAccount email={email} setEmail={setEmail} error={error} />
         )}
+        {visible === 1 && <SendEmail user={user} />}
+        {visible === 2 && (
+          <CodeVerification
+            user={user}
+            code={code}
+            setCode={setCode}
+            error={error}
+          />
+        )}
+        {visible === 3 && (
+          <ChangePassword
+            password={password}
+            setPassword={setPassword}
+            confirm_password={confirm_password}
+            setConfirm_password={setConfirm_password}
+            error={error}
+          />
+        )}
       </div>
+      <Footer />
     </div>
   );
 };
