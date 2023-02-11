@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SendEmail = ({ user }) => {
+const SendEmail = ({ userInfos }) => {
   return (
     <div className='reset_form dynamic_height'>
       <div className='reset_form_header'>Reset Your Password</div>
@@ -14,13 +14,13 @@ const SendEmail = ({ user }) => {
             <input type='radio' id='email' checked readOnly />
             <div className='label_col'>
               <span>Send code via email</span>
-              <span>exaple@gmail.com</span>
+              <span>{userInfos?.email}</span>
             </div>
           </label>
         </div>
         <div className='reset_right'>
-          <img src={user?.picture} alt='' />
-          <span>exaple@gmail.com</span>
+          <img src={userInfos?.picture} alt='' />
+          <span>{userInfos?.email}</span>
           <span>Facebook user</span>
         </div>
       </div>

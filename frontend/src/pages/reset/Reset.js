@@ -14,11 +14,13 @@ const Reset = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirm_password] = useState("");
   const [error, setError] = useState("");
+  const [userInfos, setUserInfos] = useState("");
   const logout = () => {
     Cookies.remove("user", "");
     dispatch({ type: "LOGOUT" });
@@ -52,9 +54,17 @@ const Reset = () => {
       </div>
       <div className='reset_wrap'>
         {visible === 0 && (
-          <SearchAccount email={email} setEmail={setEmail} error={error} />
+          <SearchAccount
+            email={email}
+            setEmail={setEmail}
+            error={error}
+            setError={setError}
+            setLoading={setLoading}
+            setUserInfos={setUserInfos}
+            setVisible={setVisible}
+          />
         )}
-        {visible === 1 && <SendEmail user={user} />}
+        {visible === 1 && userInfos && <SendEmail userInfos={userInfos} />}
         {visible === 2 && (
           <CodeVerification
             user={user}
