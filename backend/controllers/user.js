@@ -249,3 +249,36 @@ exports.validateResetCode = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.changePassword = async (req, res) => {
+  try {
+    const { email, password, code } = req.body;
+    if (!password || !code)
+      return res.status(400).json({ message: "All fields are required!" });
+
+    if (!validateEmail(email)) {
+      return res.status(400).json({ message: "Invalid email address" });
+    }
+    const user = await User.findOne({ email });
+    const dbCode = await Code.findOne({ user: user._id });
+    const currDate = Math.ceil(+new Date() / 1000);
+
+    if (dbCode.code !== code) {
+      return res
+        .status(400)
+        .json({ message: "Verification code is not match!." });
+    }
+    if (currDate > dbCode.codeExpire) {
+      return res
+        .status(400)
+        .json({ message: "Verification code is expired!." });
+    }
+    const cryptedPassword = await bcrypt.hash(password, 11);
+    await User.findOneAndUpdate({ email }, { password: cryptedPassword });
+    return res
+      .status(200)
+      .json({ message: "Password has been changed successfully." });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
