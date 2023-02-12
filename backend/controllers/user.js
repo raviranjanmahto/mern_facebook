@@ -7,7 +7,9 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../helpers/tokens");
-const { sendVerificationEmail } = require("../helpers/mailer");
+const { sendVerificationEmail, sendResetCode } = require("../helpers/mailer");
+const Code = require("../models/code");
+const { generateCode } = require("../helpers/generateCode");
 
 exports.register = async (req, res) => {
   try {
@@ -181,11 +183,37 @@ exports.resendVerification = async (req, res) => {
 exports.findUser = async (req, res) => {
   try {
     const { email } = req.body;
+    if (!validateEmail(email)) {
+      return res.status(400).json({ message: "Invalid email address" });
+    }
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Account does not exist!" });
     }
     return res.status(200).json({ email: user.email, picture: user.picture });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.sendResetPasswordCode = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!validateEmail(email)) {
+      return res.status(400).json({ message: "Invalid email address" });
+    }
+    const user = await User.findOne({ email });
+    await Code.findOneAndRemove({ user: user._id });
+    const code = generateCode(6);
+    await new Code({
+      user: user._id,
+      code: code.code,
+      codeExpire: code.codeExpire,
+    }).save();
+    sendResetCode(user.email, user.first_name, code.code);
+    return res
+      .status(200)
+      .json({ message: "Email reset code has been sent to your email." });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
