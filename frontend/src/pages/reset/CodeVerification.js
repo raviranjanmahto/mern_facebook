@@ -3,14 +3,42 @@ import { Form, Formik } from "formik";
 import LoginInput from "../../components/inputs/LoginInput";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
+import axios from "axios";
 
-const CodeVerification = ({ code, setCode, error }) => {
+const CodeVerification = ({
+  code,
+  setCode,
+  error,
+  setError,
+  setLoading,
+  setVisible,
+  userInfos,
+}) => {
   const validateCode = Yup.object({
     code: Yup.string()
       .required("Code is required!")
       .min(6, "Code must be 6 character")
       .max(6, "Code must be 6 character"),
   });
+  const { email } = userInfos;
+  const verifyCode = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/validateResetCode`,
+        { email, code }
+      );
+      setError("");
+      setLoading(false);
+      setVisible(3);
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.message);
+    }
+  };
+  console.log(email);
+
   return (
     <div className='reset_form'>
       <div className='reset_form_header'>Code Verification</div>
@@ -21,6 +49,9 @@ const CodeVerification = ({ code, setCode, error }) => {
         enableReinitialize
         initialValues={{ code }}
         validationSchema={validateCode}
+        onSubmit={() => {
+          verifyCode();
+        }}
       >
         {formik => (
           <Form>

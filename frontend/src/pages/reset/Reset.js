@@ -81,6 +81,11 @@ const Reset = () => {
             code={code}
             setCode={setCode}
             error={error}
+            setError={setError}
+            setLoading={setLoading}
+            setUserInfos={setUserInfos}
+            setVisible={setVisible}
+            userInfos={userInfos}
           />
         )}
         {visible === 3 && (
