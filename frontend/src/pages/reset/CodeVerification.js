@@ -37,7 +37,6 @@ const CodeVerification = ({
       setError(error.response.data.message);
     }
   };
-  console.log(email);
 
   return (
     <div className='reset_form'>

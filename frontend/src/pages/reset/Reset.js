@@ -83,18 +83,22 @@ const Reset = () => {
             error={error}
             setError={setError}
             setLoading={setLoading}
-            setUserInfos={setUserInfos}
             setVisible={setVisible}
             userInfos={userInfos}
           />
         )}
         {visible === 3 && (
           <ChangePassword
+            code={code}
             password={password}
             setPassword={setPassword}
             confirm_password={confirm_password}
             setConfirm_password={setConfirm_password}
             error={error}
+            setError={setError}
+            setLoading={setLoading}
+            setVisible={setVisible}
+            userInfos={userInfos}
           />
         )}
       </div>
