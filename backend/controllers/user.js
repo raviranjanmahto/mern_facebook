@@ -11,6 +11,17 @@ const { sendVerificationEmail, sendResetCode } = require("../helpers/mailer");
 const Code = require("../models/code");
 const { generateCode } = require("../helpers/generateCode");
 
+// Dummy function to check everything is okay or not!
+exports.ok = (req, res) => {
+  try {
+    return res
+      .status(200)
+      .json({ message: "Everything is okay, regards Raviranjan Mahto" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.register = async (req, res) => {
   try {
     const {

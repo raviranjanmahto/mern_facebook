@@ -25,7 +25,7 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => console.log("Database connected successfully!🥰"))
-  .catch(err => console.log("Error connecting to Database!🙄"));
+  .catch(err => console.log("Error connecting to Database!🙄", err));
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
