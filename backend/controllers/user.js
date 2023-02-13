@@ -25,6 +25,18 @@ exports.register = async (req, res) => {
       gender,
     } = req.body;
 
+    if (
+      !first_name ||
+      !last_name ||
+      !email ||
+      !password ||
+      !bYear ||
+      !bMonth ||
+      !bDay ||
+      !gender
+    ) {
+      return res.status(400).json({ message: "All fields are required!" });
+    }
     if (!validateEmail(email)) {
       return res.status(400).json({ message: "Invalid email address" });
     }
@@ -125,6 +137,9 @@ exports.activateAccount = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: "All fields are required!" });
+    }
     if (!validateEmail(email)) {
       return res.status(400).json({ message: "Invalid email address" });
     }
