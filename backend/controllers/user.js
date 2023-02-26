@@ -92,13 +92,22 @@ exports.register = async (req, res) => {
       bMonth,
       bDay,
       gender,
-    }).save();
+    });
     const emailVerificationToken = generateToken(
       { id: user._id.toString() },
       process.env.VERIFICATION_EXPIRE
     );
     const url = `${process.env.BASE_URL}/activate/${emailVerificationToken}`;
-    sendVerificationEmail(user.email, user.first_name, url);
+    try {
+      await sendVerificationEmail(user.email, user.first_name, url);
+    } catch (error) {
+      return res.status(400).json({
+        message: "Failed to send Verification link, please contact developer!",
+      });
+    }
+
+    await user.save();
+
     // user.password = undefined;
     const token = generateToken(
       { id: user._id.toString() },
@@ -197,7 +206,14 @@ exports.resendVerification = async (req, res) => {
       process.env.VERIFICATION_EXPIRE
     );
     const url = `${process.env.BASE_URL}/activate/${emailVerificationToken}`;
-    sendVerificationEmail(user.email, user.first_name, url);
+    try {
+      await sendVerificationEmail(user.email, user.first_name, url);
+    } catch (error) {
+      return res.status(400).json({
+        message: "Failed to send Verification link, please contact developer!",
+      });
+    }
+
     return res.status(200).json({
       message: "Email verification link has been sent to your email.",
     });
@@ -236,7 +252,14 @@ exports.sendResetPasswordCode = async (req, res) => {
       code: code.code,
       codeExpire: code.codeExpire,
     }).save();
-    sendResetCode(user.email, user.first_name, code.code);
+    try {
+      await sendResetCode(user.email, user.first_name, code.code);
+    } catch (error) {
+      return res.status(400).json({
+        message: "Failed to send Reset code, please contact developer!",
+      });
+    }
+
     return res
       .status(200)
       .json({ message: "Email reset code has been sent to your email." });
