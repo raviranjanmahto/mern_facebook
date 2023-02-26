@@ -14,6 +14,7 @@ const SendEmail = ({
 }) => {
   const SendEmail = async () => {
     try {
+      setError("");
       setLoading(true);
       await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/sendResetPasswordCode`,

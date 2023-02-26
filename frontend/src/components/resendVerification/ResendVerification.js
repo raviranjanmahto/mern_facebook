@@ -7,6 +7,8 @@ const ResendVerification = ({ user }) => {
   const [success, setSuccess] = useState("");
   const sendVerificationLink = async () => {
     try {
+      setError("");
+      setSuccess("");
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/resendVerification`,
         {},
@@ -24,7 +26,7 @@ const ResendVerification = ({ user }) => {
         after a few month from creating.
       </span>
       <a
-        onClick={() => {
+      onClick={() => {
           sendVerificationLink();
         }}
       >
